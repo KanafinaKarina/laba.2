@@ -1,30 +1,33 @@
-#ifndef MATRIX_H
+#pragma once      //директива обеспечивает защиту от многократного включения заголовочного файла
+#ifndef MATRIX_H  //начинает условную компиляцию, чтобы проверить, был ли файл уже включен ранее
 #define MATRIX_H
 
 #include <iostream>
 
 class Matrix {
 private:
-    int** data;
-    unsigned int m;
-    unsigned int n;
+    int** data;     //для хранепния данных матрицы
+    unsigned int m, n;   //для хранения количества строк и столбцов матрицы
 
 public:
-    Matrix(unsigned int m, unsigned int n);
-    ~Matrix();
+    Matrix(unsigned int rows, unsigned int columns);   //конструктор, создает матрицу заданного размера
+    ~Matrix();                                         //деструктор, освобождает динамически выделенную память
 
-    int* operator[](unsigned int index) const;
+    int* operator[](unsigned int i);
 
     void fillRandom();
 
-    friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
-    Matrix operator+=(const Matrix& matrix);
-    Matrix operator+(const Matrix& matrix);
-    Matrix operator-=(const Matrix& matrix);
-    Matrix operator-(const Matrix& matrix);
-    Matrix operator*(const Matrix& matrix);
-    bool operator!=(const Matrix& matrix);
-    bool operator==(const Matrix& matrix);
+    Matrix operator+(const Matrix& other);
+    Matrix operator-(const Matrix& other);
+    Matrix operator*(const Matrix& other);
+
+    Matrix& operator+=(const Matrix& other);
+    Matrix& operator-=(const Matrix& other);
+
+    bool operator==(const Matrix& other);
+    bool operator!=(const Matrix& other);
+
+    friend std::ostream& operator<<(std::ostream& out, const Matrix& matrix);
 };
 
-#endif //MATRIX_H#
+#endif
